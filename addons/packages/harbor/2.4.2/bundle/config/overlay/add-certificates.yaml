@@ -75,6 +75,11 @@ kind: Secret
 metadata:
   name: #@ harbor_tls_secret
   namespace: #@ harbor_namespace
+  #@ if values.tlsCertificate.tlsSecretLabels:
+  #@overlay/match missing_ok=True
+  labels:
+    _: #@ template.replace(values.tlsCertificate.tlsSecretLabels)
+  #@ end
 type: kubernetes.io/tls
 data:
   #@ if/end ca_crt:

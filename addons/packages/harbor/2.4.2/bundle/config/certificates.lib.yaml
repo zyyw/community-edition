@@ -1,6 +1,8 @@
 #@ load("@ytt:overlay", "overlay")
 #@ load("@ytt:template", "template")
 #@ load("@ytt:yaml", "yaml")
+#@ load("/values.star", "values")
+#@ load("@ytt:template", "template")
 
 #@ def get_issuer():
 apiVersion: cert-manager.io/v1
@@ -127,6 +129,12 @@ metadata:
 #@ def certificate_secret(secret_name):
 spec:
   secretName: #@ secret_name
+  #@ if values.tlsCertificate.tlsSecretLabels:
+  #@overlay/match missing_ok=True
+  secretTemplate:
+    labels:
+      _: #@ template.replace(values.tlsCertificate.tlsSecretLabels)
+  #@ end
 #@ end
 
 #@ def certificate_details(duration, renew_before, organizations, common_name, dns_names):

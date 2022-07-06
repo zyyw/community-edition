@@ -24,6 +24,7 @@ tlsCertificate:
   #! [Optional] the certificate of CA, this enables the download
   #! link on portal to download the certificate of CA
   ca.crt:
+  tlsSecretLabels: {}
 
 #! [Optional] The name of the secret for harbor FQDN if you want to use your own TLS certificate,
 #! which contains keys named:
